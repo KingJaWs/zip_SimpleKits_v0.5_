@@ -15,7 +15,6 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Item;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\tile\Sign;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\event\player\PlayerItemHeldEvent;
@@ -68,22 +67,6 @@ class main extends PluginBase implements Listener{
 			$key = array_search($ev->getPlayer()->getName(), $this->haskit);
 			unset($this->haskit[$key]);
 		}
-	}
-	public function signTap(PlayerInteractEvent $ev){
-		if ($ev->getBlock()->getId() == 63 || $ev->getBlock()->getId() == 68){
-		$signtile = $ev->getBlock()->getLevel()->getTile($ev->getBlock());
-		$p = $ev->getPlayer();
-		if ($signtile instanceof Sign){
-			$text= $signtile->getText();
-			if ($text[0] === "§e[Kit]"){
-				if (isset($text[1])){
-				if ($this->kits->exists($text[1]) and !in_array($p->getName(), $this->haskit)){
-					$this->canHaveKit($p, $text[1]);
-				}else {
-					$p->sendMessage("[SimpleKits] Already have kit or kit does not exsist :(");
-				}}
-			}
-		}}
 	}
 	public function timer(){
 		$time = $this->time->getAll();
